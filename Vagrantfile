@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "lb" do |lb|
     lb.vm.network "private_network", ip: "192.168.2.11"
     lb.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
       chef.add_recipe "nginx-app"
       chef.add_recipe "nginx-app::lb"
     end
@@ -19,6 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "web1" do |web1|
     web1.vm.network "private_network", ip: "192.168.2.21"
     web1.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
       chef.add_recipe "nginx-app"
       chef.add_recipe "nginx-app::web"
       chef.json = { name: "web1" }
@@ -28,6 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "web2" do |web2|
     web2.vm.network "private_network", ip: "192.168.2.22"
     web2.vm.provision :chef_solo do |chef|
+      chef.cookbooks_path = ["cookbooks", "site-cookbooks"]
       chef.add_recipe "nginx-app"
       chef.add_recipe "nginx-app::web"
       chef.json = { name: "web2" }
